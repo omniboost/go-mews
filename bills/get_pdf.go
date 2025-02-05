@@ -45,6 +45,10 @@ type GetPDFRequest struct {
 	BillID string `json:"BillId"`
 	// Unique identifier of the Bill print event returned by previous invocation.
 	BillPrintEventID string `json:"BillPrintEventId,omitempty"`
+	// Bill PDF template type. If not specified, the default template is used.
+	PdfTemplate PdfTemplateType `json:"PdfTemplate,omitempty"`
+	// The reason for reprinting the bill with different template. Required for France LE.
+	PrintReason string `json:"PrintReason,omitempty"`
 }
 
 func (r GetPDFRequest) MarshalJSON() ([]byte, error) {
@@ -98,6 +102,16 @@ type BillPDFResultDiscriminator string
 var (
 	BillPDFFileDiscriminator    BillPDFResultDiscriminator = "BillPdfFile"
 	BillPrintEventDiscriminator BillPDFResultDiscriminator = "BillPrintEvent"
+)
+
+type PdfTemplateType string
+
+var (
+	PdfTemplateDetailed    PdfTemplateType = "Detailed"
+	PdfTemplateConsumption PdfTemplateType = "Consumption"
+	PdfTemplateReservation PdfTemplateType = "Reservation"
+	PdfTemplateOrderItem   PdfTemplateType = "OrderItem"
+	PdfTemplateGuest       PdfTemplateType = "Guest"
 )
 
 type BillPDFFile struct {
