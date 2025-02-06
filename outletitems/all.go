@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/tim-online/go-errors"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (

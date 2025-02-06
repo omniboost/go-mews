@@ -8,7 +8,7 @@ https://mewssystems.github.io/public/content/developers/api.html
 ## Usage
 
 ``` go
-import "github.com/tim-online/go-mews"
+import "github.com/omniboost/go-mews"
 ```
 
 ### Request companies

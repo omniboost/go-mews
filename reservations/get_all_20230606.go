@@ -3,9 +3,9 @@ package reservations
 import (
 	"time"
 
-	"github.com/tim-online/go-mews/configuration"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
+	"github.com/omniboost/go-mews/configuration"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (

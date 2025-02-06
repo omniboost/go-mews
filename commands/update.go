@@ -1,6 +1,6 @@
 package commands
 
-import "github.com/tim-online/go-mews/json"
+import "github.com/omniboost/go-mews/json"
 
 const (
 	endpointUpdate = "commands/update"

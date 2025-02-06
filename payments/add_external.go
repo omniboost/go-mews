@@ -1,9 +1,9 @@
 package payments
 
 import (
-	"github.com/tim-online/go-mews/accountingitems"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
+	"github.com/omniboost/go-mews/accountingitems"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (

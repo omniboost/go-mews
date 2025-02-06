@@ -1,6 +1,6 @@
 package configuration
 
-import "github.com/tim-online/go-mews/json"
+import "github.com/omniboost/go-mews/json"
 
 const (
 	endpointTaxationsGetAll = "taxations/getAll"

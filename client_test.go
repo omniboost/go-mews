@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	mews "github.com/tim-online/go-mews"
-	"github.com/tim-online/go-mews/accountingitems"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/ledgerbalances"
-	"github.com/tim-online/go-mews/reservations"
+	mews "github.com/omniboost/go-mews"
+	"github.com/omniboost/go-mews/accountingitems"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/ledgerbalances"
+	"github.com/omniboost/go-mews/reservations"
 )
 
 func getClient() *mews.Client {

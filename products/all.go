@@ -1,9 +1,9 @@
 package products
 
 import (
-	"github.com/tim-online/go-mews/configuration"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/services"
+	"github.com/omniboost/go-mews/configuration"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/services"
 )
 
 const (

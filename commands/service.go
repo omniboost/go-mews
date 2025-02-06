@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tim-online/go-mews/json"
+	"github.com/omniboost/go-mews/json"
 )
 
 type Service struct {

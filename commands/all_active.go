@@ -3,8 +3,8 @@ package commands
 import (
 	"time"
 
-	"github.com/tim-online/go-mews/bills"
-	"github.com/tim-online/go-mews/json"
+	"github.com/omniboost/go-mews/bills"
+	"github.com/omniboost/go-mews/json"
 )
 
 const (

@@ -5,8 +5,8 @@ import (
 
 	"encoding/json"
 
-	"github.com/tim-online/go-mews/accountingitems"
-	base "github.com/tim-online/go-mews/json"
+	"github.com/omniboost/go-mews/accountingitems"
+	base "github.com/omniboost/go-mews/json"
 )
 
 const (

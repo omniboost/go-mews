@@ -1,9 +1,9 @@
 package resources
 
 import (
-	"github.com/tim-online/go-mews/configuration"
-	"github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
+	"github.com/omniboost/go-mews/configuration"
+	"github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (

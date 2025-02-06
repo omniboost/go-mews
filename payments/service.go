@@ -1,6 +1,6 @@
 package payments
 
-import "github.com/tim-online/go-mews/json"
+import "github.com/omniboost/go-mews/json"
 
 type Service struct {
 	Client *json.Client

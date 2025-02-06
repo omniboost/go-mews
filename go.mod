@@ -1,4 +1,4 @@
-module github.com/tim-online/go-mews
+module github.com/omniboost/go-mews
 
 go 1.20
 

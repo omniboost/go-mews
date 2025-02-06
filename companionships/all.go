@@ -1,12 +1,12 @@
 package companionships
 
 import (
-	"github.com/tim-online/go-mews/configuration"
-	"github.com/tim-online/go-mews/customers"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
-	"github.com/tim-online/go-mews/reservationgroups"
-	"github.com/tim-online/go-mews/reservations"
+	"github.com/omniboost/go-mews/configuration"
+	"github.com/omniboost/go-mews/customers"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
+	"github.com/omniboost/go-mews/reservationgroups"
+	"github.com/omniboost/go-mews/reservations"
 )
 
 const (

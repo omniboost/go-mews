@@ -12,9 +12,9 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/tim-online/go-mews/commands"
-	"github.com/tim-online/go-mews/reservations"
-	"github.com/tim-online/go-mews/resources"
+	"github.com/omniboost/go-mews/commands"
+	"github.com/omniboost/go-mews/reservations"
+	"github.com/omniboost/go-mews/resources"
 )
 
 var (

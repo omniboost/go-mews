@@ -1,7 +1,7 @@
 package outlets
 
 import (
-	base "github.com/tim-online/go-mews/json"
+	base "github.com/omniboost/go-mews/json"
 )
 
 const (

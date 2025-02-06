@@ -3,7 +3,7 @@ package configuration
 import (
 	"time"
 
-	base "github.com/tim-online/go-mews/json"
+	base "github.com/omniboost/go-mews/json"
 )
 
 const (

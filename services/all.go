@@ -3,7 +3,7 @@ package services
 import (
 	"encoding/json"
 
-	base "github.com/tim-online/go-mews/json"
+	base "github.com/omniboost/go-mews/json"
 )
 
 const (

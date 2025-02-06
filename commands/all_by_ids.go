@@ -1,7 +1,7 @@
 package commands
 
 import (
-	"github.com/tim-online/go-mews/json"
+	"github.com/omniboost/go-mews/json"
 )
 
 const (

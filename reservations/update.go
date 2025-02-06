@@ -1,9 +1,9 @@
 package reservations
 
 import (
-	"github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
-	"github.com/tim-online/go-mews/orderitems"
+	"github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
+	"github.com/omniboost/go-mews/orderitems"
 )
 
 const (

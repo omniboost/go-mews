@@ -3,9 +3,9 @@ package productserviceorders
 import (
 	"time"
 
-	"github.com/tim-online/go-mews/configuration"
-	base "github.com/tim-online/go-mews/json"
-	"github.com/tim-online/go-mews/omitempty"
+	"github.com/omniboost/go-mews/configuration"
+	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (
@@ -87,6 +87,6 @@ type ServiceOrderOptions struct {
 	AnyCompanionCheckedIn  bool `json:"AnyCompanionCheckedIn"`  // Any of the companions of the reservation checked in.
 	ConnectorCheckIn       bool `json:"ConnectorCheckIn"`       // Check in was done via Connector API.
 }
- 
+
 type ServiceOrderState string
 type ServiceOrderOrigin string
