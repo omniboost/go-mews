@@ -7,6 +7,7 @@ import (
 
 	"github.com/omniboost/go-mews/accountingcategories"
 	"github.com/omniboost/go-mews/accountingitems"
+	"github.com/omniboost/go-mews/agecategories"
 	"github.com/omniboost/go-mews/bills"
 	"github.com/omniboost/go-mews/businesssegments"
 	"github.com/omniboost/go-mews/cashiertransactions"
@@ -74,6 +75,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	// Services
 	c.AccountingItems = accountingitems.NewService()
 	c.AccountingItems.Client = c.client
+	c.AgeCategories = agecategories.NewService()
+	c.AgeCategories.Client = c.client
 	c.Payments = payments.NewService()
 	c.Payments.Client = c.client
 	c.OrderItems = orderitems.NewService()
@@ -137,6 +140,7 @@ type Client struct {
 
 	// Services used for communicating with the API
 	AccountingItems      *accountingitems.APIService
+	AgeCategories        *agecategories.Service
 	Payments             *payments.Service
 	OrderItems           *orderitems.Service
 	OutletItems          *outletitems.Service
