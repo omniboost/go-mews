@@ -59,6 +59,7 @@ type GetAll20230606Request struct {
 	ScheduledStartUTC   configuration.TimeInterval `json:"ScheduledStartUtc,omitempty"`
 	ScheduledEndUTC     configuration.TimeInterval `json:"ScheduledEndUtc,omitempty"`
 	ActualStartUTC      configuration.TimeInterval `json:"ActualStartUtc,omitempty"`
+	ActualEndUTC        configuration.TimeInterval `json:"ActualEndUTC,omitempty"`
 	CollidingUTC        configuration.TimeInterval `json:"CollidingUtc,omitempty"`
 }
 
