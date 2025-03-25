@@ -144,18 +144,15 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 func (c *Client) NewRequest(apiURL *url.URL, requestBody interface{}) (*http.Request, error) {
 	buf := new(bytes.Buffer)
 	if requestBody != nil {
-		if s, ok := requestBody.(BaseRequest); ok {
-			if s.LanguageCode == "" {
-				s.SetLanguageCode(c.languageCode)
-			}
-			if s.CultureCode == "" {
-				s.SetCultureCode(c.cultureCode)
-			}
-		}
-
 		if s, ok := requestBody.(RequestBody); ok {
 			s.SetAccessToken(c.AccessToken)
 			s.SetClientToken(c.ClientToken)
+			if c.languageCode != "" {
+				s.SetLanguageCode(c.languageCode)
+			}
+			if c.cultureCode != "" {
+				s.SetCultureCode(c.cultureCode)
+			}
 		}
 
 		err := json.NewEncoder(buf).Encode(requestBody)
