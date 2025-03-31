@@ -70,32 +70,34 @@ func (r AllRequest) MarshalJSON() ([]byte, error) {
 type OrderItems []OrderItem
 
 type OrderItem struct {
-	ID                   string           `json:"ID,omitempty"`
-	EnterpriseID         string           `json:"EnterpriseID,omitempty"`
-	AccountID            string           `json:"AccountID,omitempty"`
-	AccountType          string           `json:"AccountType,omitempty"`
-	ServiceID            string           `json:"ServiceID,omitempty"`
-	ServiceOrderID       string           `json:"ServiceOrderID,omitempty"`
-	BillID               string           `json:"BillID,omitempty"`
-	AccountingCategoryID string           `json:"AccountingCategoryID,omitempty"`
-	UnitCount            int              `json:"UnitCount,omitempty"`
-	UnitAmount           Amount           `json:"UnitAmount,omitempty"`
-	Amount               Amount           `json:"Amount,omitempty"`
-	OriginalAmount       Amount           `json:"OriginalAmount,omitempty"`
-	Notes                string           `json:"Notes,omitempty"`
-	RevenueType          RevenueType      `json:"RevenueType,omitempty"`
-	CreatorProfileID     string           `json:"CreatorProfileID,omitempty"`
-	UpdatedProfileID     string           `json:"UpdatedProfileID,omitempty"`
-	ConsumedUTC          time.Time        `json:"ConsumedUtc,omitempty"`
-	ClosedUTC            time.Time        `json:"ClosedUtc,omitempty"`
-	ChargedUTC           time.Time        `json:"ChargedUtc,omitempty"`
-	CreatedUTC           time.Time        `json:"CreatedUtc,omitempty"`
-	UpdatedUTC           time.Time        `json:"UpdatedUtc,omitempty"`
-	StartUTC             time.Time        `json:"StartUtc,omitempty"`
-	AccountingState      AccountingState  `json:"AccountingState,omitempty"`
-	Type                 OrderItemType    `json:"Type,omitempty"`
-	Options              OrderItemOptions `json:"Options,omitempty"`
-	Data                 OrderItemData    `json:"Data,omitempty"`
+	ID                         string           `json:"ID,omitempty"`
+	EnterpriseID               string           `json:"EnterpriseID,omitempty"`
+	AccountID                  string           `json:"AccountID,omitempty"`
+	AccountType                string           `json:"AccountType,omitempty"`
+	ServiceID                  string           `json:"ServiceID,omitempty"`
+	ServiceOrderID             string           `json:"ServiceOrderID,omitempty"`
+	BillID                     string           `json:"BillID,omitempty"`
+	AccountingCategoryID       string           `json:"AccountingCategoryID,omitempty"`
+	UnitCount                  int              `json:"UnitCount,omitempty"`
+	UnitAmount                 Amount           `json:"UnitAmount,omitempty"`
+	Amount                     Amount           `json:"Amount,omitempty"`
+	OriginalAmount             Amount           `json:"OriginalAmount,omitempty"`
+	Notes                      string           `json:"Notes,omitempty"`
+	RevenueType                RevenueType      `json:"RevenueType,omitempty"`
+	CreatorProfileID           string           `json:"CreatorProfileID,omitempty"`
+	UpdatedProfileID           string           `json:"UpdatedProfileID,omitempty"`
+	ConsumedUTC                time.Time        `json:"ConsumedUtc,omitempty"`
+	ClosedUTC                  time.Time        `json:"ClosedUtc,omitempty"`
+	ChargedUTC                 time.Time        `json:"ChargedUtc,omitempty"`
+	CreatedUTC                 time.Time        `json:"CreatedUtc,omitempty"`
+	UpdatedUTC                 time.Time        `json:"UpdatedUtc,omitempty"`
+	StartUTC                   time.Time        `json:"StartUtc,omitempty"`
+	AccountingState            AccountingState  `json:"AccountingState,omitempty"`
+	Type                       OrderItemType    `json:"Type,omitempty"`
+	Options                    OrderItemOptions `json:"Options,omitempty"`
+	Data                       OrderItemData    `json:"Data,omitempty"`
+	TaxExemptionReason         string           `json:"TaxExemptionReason,omitempty"`
+	TaxExemptionLegalReference string           `json:"TaxExemptionLegalReference,omitempty"`
 }
 
 type RevenueType string
