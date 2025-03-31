@@ -37,7 +37,9 @@ type AllResponse struct {
 }
 
 func (s *Service) NewAllRequest() *AllRequest {
-	return &AllRequest{}
+	return &AllRequest{
+		Limitation: &json.Limitation{},
+	}
 }
 
 type AllRequest struct {

@@ -15,6 +15,7 @@ import (
 	"github.com/omniboost/go-mews/companies"
 	"github.com/omniboost/go-mews/companionships"
 	"github.com/omniboost/go-mews/configuration"
+	"github.com/omniboost/go-mews/counters"
 	"github.com/omniboost/go-mews/countries"
 	"github.com/omniboost/go-mews/creditcards"
 	"github.com/omniboost/go-mews/customers"
@@ -89,6 +90,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.Companies.Client = c.client
 	c.Companionships = companionships.NewService()
 	c.Companionships.Client = c.client
+	c.Counters = counters.NewService()
+	c.Counters.Client = c.client
 	c.Countries = countries.NewService()
 	c.Countries.Client = c.client
 	c.Customers = customers.NewService()
@@ -147,6 +150,7 @@ type Client struct {
 	AccountingCategories *accountingcategories.Service
 	Companies            *companies.Service
 	Companionships       *companionships.Service
+	Counters             *counters.Service
 	Countries            *countries.Service
 	Customers            *customers.Service
 	Outlets              *outlets.APIService

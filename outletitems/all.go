@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/tim-online/go-errors"
+	"github.com/omniboost/go-mews/configuration"
 	base "github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/omitempty"
+	"github.com/tim-online/go-errors"
 )
 
 const (
@@ -51,10 +52,13 @@ func (s *Service) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
-	Limitation base.Limitation       `json:"Limitation,omitempty"`
-	StartUTC   *time.Time            `json:"StartUtc,omitempty"`
-	EndUTC     *time.Time            `json:"EndUtc,omitempty"`
-	TimeFilter OutletItemsTimeFilter `json:"TimeFilter,omitempty"`
+	Limitation  base.Limitation            `json:"Limitation,omitempty"`
+	ConsumedUTC configuration.TimeInterval `json:"ConsumedUtc,omitempty"`
+	ClosedUTC   configuration.TimeInterval `json:"ClosedUtc,omitempty"`
+	UpdatedUTC  configuration.TimeInterval `json:"UpdatedUtc,omitempty"`
+	StartUTC    *time.Time                 `json:"StartUtc,omitempty"`
+	EndUTC      *time.Time                 `json:"EndUtc,omitempty"`
+	TimeFilter  OutletItemsTimeFilter      `json:"TimeFilter,omitempty"`
 }
 
 func (r AllRequest) MarshalJSON() ([]byte, error) {
