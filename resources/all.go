@@ -53,6 +53,8 @@ func (r AllRequest) MarshalJSON() ([]byte, error) {
 
 type AllResponse struct {
 	Resources                   Resources                   `json:"Resources"`
+	ResourceCategoryAssignments ResourceCategoryAssignments `json:"ResourceCategoryAssignments"`
+	ResourceCategories          ResourceCategories          `json:"ResourceCategories"`
 }
 
 type Resources []Resource
