@@ -1,6 +1,9 @@
 package json
 
-import "github.com/cydev/zero"
+import (
+	"context"
+	"github.com/cydev/zero"
+)
 
 type BaseRequest struct {
 	AccessToken  string `json:"AccessToken"`
@@ -8,6 +11,18 @@ type BaseRequest struct {
 	LanguageCode string `json:"LanguageCode,omitempty"`
 	CultureCode  string `json:"CultureCode,omitempty"`
 	Client       string `json:"Client,omitempty"`
+	context      context.Context
+}
+
+func (req *BaseRequest) SetContext(ctx context.Context) {
+	req.context = ctx
+}
+
+func (req *BaseRequest) GetContext() context.Context {
+	if req.context == nil {
+		return context.Background()
+	}
+	return req.context
 }
 
 func (req *BaseRequest) SetAccessToken(token string) {

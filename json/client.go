@@ -2,6 +2,7 @@ package json
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -143,6 +144,7 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 // value pointed to by body is XML encoded and included in as the request body.
 func (c *Client) NewRequest(apiURL *url.URL, requestBody interface{}) (*http.Request, error) {
 	buf := new(bytes.Buffer)
+	ctx := context.Background()
 	if requestBody != nil {
 		if s, ok := requestBody.(RequestBody); ok {
 			s.SetAccessToken(c.AccessToken)
@@ -153,6 +155,7 @@ func (c *Client) NewRequest(apiURL *url.URL, requestBody interface{}) (*http.Req
 			if c.cultureCode != "" {
 				s.SetCultureCode(c.cultureCode)
 			}
+			ctx = s.GetContext()
 		}
 
 		err := json.NewEncoder(buf).Encode(requestBody)
@@ -161,7 +164,7 @@ func (c *Client) NewRequest(apiURL *url.URL, requestBody interface{}) (*http.Req
 		}
 	}
 
-	httpReq, err := http.NewRequest(http.MethodPost, apiURL.String(), buf)
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPost, apiURL.String(), buf)
 	if err != nil {
 		return nil, err
 	}
@@ -202,4 +205,5 @@ type RequestBody interface {
 	SetClientToken(string)
 	SetLanguageCode(string)
 	SetCultureCode(string)
+	GetContext() context.Context
 }
