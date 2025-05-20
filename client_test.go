@@ -1,6 +1,8 @@
 package mews_test
 
 import (
+	"log"
+	"net/url"
 	"os"
 	"testing"
 	"time"
@@ -16,11 +18,19 @@ func getClient() *mews.Client {
 	// get username & password
 	accessToken := os.Getenv("MEWS_ACCESS_TOKEN")
 	clientToken := os.Getenv("MEWS_CLIENT_TOKEN")
+	baseURL := os.Getenv("MEWS_BASE_URL")
 
 	// build client
 	client := mews.NewClient(nil, accessToken, clientToken)
 	client.SetDebug(true)
-	// client.SetBaseURL(mews.BaseURLDemo)
+
+	if baseURL != "" {
+		u, err := url.Parse(baseURL)
+		if err != nil {
+			log.Fatal(err)
+		}
+		client.SetBaseURL(u)
+	}
 	client.SetDisallowUnknownFields(true)
 
 	return client
