@@ -11,6 +11,7 @@ import (
 	"github.com/omniboost/go-mews/accountingitems"
 	base "github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/ledgerbalances"
+	"github.com/omniboost/go-mews/ledgerentries"
 	"github.com/omniboost/go-mews/reservations"
 )
 
@@ -105,6 +106,27 @@ func TestLedgerBalances(t *testing.T) {
 	}
 	requestBody.Limitation.Count = 100
 	_, err := client.LedgerBalances.All(requestBody)
+	if err != nil {
+		t.Error(err)
+	}
+}
+
+func TestLedgerEntries(t *testing.T) {
+	client := getClient()
+
+	start := time.Now().AddDate(0, -1, 0)
+	end := time.Now()
+
+	requestBody := &ledgerentries.AllRequest{}
+	requestBody.PostingDate.Start = base.Date{Time: start}
+	requestBody.PostingDate.End = base.Date{Time: end}
+	requestBody.LedgerTypes = []ledgerentries.LedgerType{
+		"Deposit",
+		"Guest",
+		"City",
+	}
+	requestBody.Limitation.Count = 100
+	_, err := client.LedgerEntries.All(requestBody)
 	if err != nil {
 		t.Error(err)
 	}

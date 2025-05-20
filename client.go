@@ -23,6 +23,7 @@ import (
 	"github.com/omniboost/go-mews/finance"
 	"github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/ledgerbalances"
+	"github.com/omniboost/go-mews/ledgerentries"
 	"github.com/omniboost/go-mews/orderitems"
 	"github.com/omniboost/go-mews/outletitems"
 	"github.com/omniboost/go-mews/outlets"
@@ -132,6 +133,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.CreditCards.Client = c.client
 	c.LedgerBalances = ledgerbalances.NewService()
 	c.LedgerBalances.Client = c.client
+	c.LedgerEntries = ledgerentries.NewService()
+	c.LedgerEntries.Client = c.client
 
 	return c
 }
@@ -171,6 +174,7 @@ type Client struct {
 	CashierTransactions  *cashiertransactions.Service
 	CreditCards          *creditcards.Service
 	LedgerBalances       *ledgerbalances.Service
+	LedgerEntries        *ledgerentries.Service
 }
 
 func (c *Client) SetDebug(debug bool) {
