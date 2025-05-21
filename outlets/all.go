@@ -32,6 +32,7 @@ func (s *APIService) All(requestBody *AllRequest) (*AllResponse, error) {
 
 type AllResponse struct {
 	Outlets Outlets
+	Cursor  string `json:"Cursor"`
 }
 
 func (s *APIService) NewAllRequest() *AllRequest {
@@ -40,6 +41,7 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
+	Limitation base.Limitation `json:"Limitation,omitempty"`
 }
 
 type Outlets []Outlet
