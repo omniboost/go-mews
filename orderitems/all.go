@@ -47,7 +47,7 @@ func (s *Service) NewAllRequest() *AllRequest {
 type AllRequest struct {
 	base.BaseRequest
 	EnterpriseIDs    []string                   `json:"EnterpriseIDs,omitempty"`
-	OrderItemIDS     []string                   `json:"OrderItemIds,omitempty"`
+	OrderItemIDs     []string                   `json:"OrderItemIds,omitempty"`
 	ServiceOrderIDs  []string                   `json:"ServiceOrderIds,omitempty"`
 	ServiceIDs       []string                   `json:"ServiceIds,omitempty"`
 	BillIDs          []string                   `json:"BillIDs,omitempty"`
