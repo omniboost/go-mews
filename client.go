@@ -21,6 +21,7 @@ import (
 	"github.com/omniboost/go-mews/customers"
 	"github.com/omniboost/go-mews/enterprises"
 	"github.com/omniboost/go-mews/finance"
+	"github.com/omniboost/go-mews/identitydocuments"
 	"github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/ledgerbalances"
 	"github.com/omniboost/go-mews/ledgerentries"
@@ -135,6 +136,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.LedgerBalances.Client = c.client
 	c.LedgerEntries = ledgerentries.NewService()
 	c.LedgerEntries.Client = c.client
+	c.IdentityDocuments = identitydocuments.NewAPIService()
+	c.IdentityDocuments.Client = c.client
 
 	return c
 }
@@ -175,6 +178,7 @@ type Client struct {
 	CreditCards          *creditcards.Service
 	LedgerBalances       *ledgerbalances.Service
 	LedgerEntries        *ledgerentries.Service
+	IdentityDocuments    *identitydocuments.APIService
 }
 
 func (c *Client) SetDebug(debug bool) {
