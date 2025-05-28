@@ -73,6 +73,9 @@ type Bill struct {
 	EnterpriseData        BillEnterpriseData         `json:"EnterpriseData"`        // Additional information about the enterprise issuing the bill, including bank account details. Persisted at the time of closing of the bill.
 	PurchaseOrderNumber   string                     `json:"PurchaseOrderNumber"`   // Unique number of the purchase order from the buyer.
 	Options               BillOptions                `json:"Options"`               // Options of the bill.
+	CorrectionState       string                     `json:"CorrectionState"`       // State of the bill correction, if applicable. If not specified, the bill is not a correction.
+	CorrectionType        *string                    `json:"CorrectionType"`        // Type of the bill correction, if applicable. If not specified, the bill is not a correction.
+	CorrectedBillID       *string                    `json:"CorrectedBillId"`       // Unique identifier of the bill that this bill corrects, if applicable. If not specified, the bill is not a correction.
 }
 
 type BillType string
