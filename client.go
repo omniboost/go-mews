@@ -10,6 +10,7 @@ import (
 	"github.com/omniboost/go-mews/agecategories"
 	"github.com/omniboost/go-mews/bills"
 	"github.com/omniboost/go-mews/businesssegments"
+	"github.com/omniboost/go-mews/cashiers"
 	"github.com/omniboost/go-mews/cashiertransactions"
 	"github.com/omniboost/go-mews/commands"
 	"github.com/omniboost/go-mews/companies"
@@ -130,6 +131,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.Finance.Client = c.client
 	c.CashierTransactions = cashiertransactions.NewService()
 	c.CashierTransactions.Client = c.client
+	c.Cashiers = cashiers.NewService()
+	c.Cashiers.Client = c.client
 	c.CreditCards = creditcards.NewService()
 	c.CreditCards.Client = c.client
 	c.LedgerBalances = ledgerbalances.NewService()
@@ -175,6 +178,7 @@ type Client struct {
 	Tasks                *tasks.Service
 	Finance              *finance.Service
 	CashierTransactions  *cashiertransactions.Service
+	Cashiers             *cashiers.Service
 	CreditCards          *creditcards.Service
 	LedgerBalances       *ledgerbalances.Service
 	LedgerEntries        *ledgerentries.Service

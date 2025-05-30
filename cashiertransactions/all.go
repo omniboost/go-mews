@@ -42,6 +42,7 @@ func (s *Service) NewAllRequest() *AllRequest {
 type AllRequest struct {
 	json.BaseRequest
 	CreatedUTC configuration.TimeInterval `json:"CreatedUtc"`
+	Limitation json.Limitation            `json:"Limitation,omitempty"`
 }
 
 func (r AllRequest) MarshalJSON() ([]byte, error) {
@@ -50,6 +51,7 @@ func (r AllRequest) MarshalJSON() ([]byte, error) {
 
 type AllResponse struct {
 	CashierTransactions CashierTransactions `json:"CashierTransactions"`
+	Cursor              string              `json:"Cursor"`
 }
 
 type CashierTransactions []CashierTransaction
