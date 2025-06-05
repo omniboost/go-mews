@@ -78,6 +78,7 @@ type OrderItem struct {
 	ServiceOrderID             string           `json:"ServiceOrderID,omitempty"`
 	BillID                     string           `json:"BillID,omitempty"`
 	AccountingCategoryID       string           `json:"AccountingCategoryID,omitempty"`
+	BillingName                string           `json:"BillingName,omitempty"`
 	UnitCount                  int              `json:"UnitCount,omitempty"`
 	UnitAmount                 Amount           `json:"UnitAmount,omitempty"`
 	Amount                     Amount           `json:"Amount,omitempty"`
