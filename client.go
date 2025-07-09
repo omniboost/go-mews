@@ -22,6 +22,7 @@ import (
 	"github.com/omniboost/go-mews/customers"
 	"github.com/omniboost/go-mews/enterprises"
 	"github.com/omniboost/go-mews/finance"
+	"github.com/omniboost/go-mews/fiscalmachinecommands"
 	"github.com/omniboost/go-mews/identitydocuments"
 	"github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/ledgerbalances"
@@ -141,6 +142,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.LedgerEntries.Client = c.client
 	c.IdentityDocuments = identitydocuments.NewAPIService()
 	c.IdentityDocuments.Client = c.client
+	c.FiscalMachineCommands = fiscalmachinecommands.NewService()
+	c.FiscalMachineCommands.Client = c.client
 
 	return c
 }
@@ -151,38 +154,39 @@ type Client struct {
 	client *json.Client
 
 	// Services used for communicating with the API
-	AccountingItems      *accountingitems.APIService
-	AgeCategories        *agecategories.Service
-	Payments             *payments.Service
-	OrderItems           *orderitems.Service
-	OutletItems          *outletitems.Service
-	AccountingCategories *accountingcategories.Service
-	Companies            *companies.Service
-	Companionships       *companionships.Service
-	Counters             *counters.Service
-	Countries            *countries.Service
-	Customers            *customers.Service
-	Outlets              *outlets.APIService
-	Enterprises          *enterprises.APIService
-	Products             *products.APIService
-	Reservations         *reservations.APIService
-	ReservationGroups    *reservationgroups.APIService
-	Resources            *resources.APIService
-	ProductServiceOrders *productserviceorders.APIService
-	Services             *services.APIService
-	Rates                *rates.APIService
-	Bills                *bills.Service
-	Commands             *commands.Service
-	Configuration        *configuration.Service
-	BusinessSegments     *businesssegments.Service
-	Tasks                *tasks.Service
-	Finance              *finance.Service
-	CashierTransactions  *cashiertransactions.Service
-	Cashiers             *cashiers.Service
-	CreditCards          *creditcards.Service
-	LedgerBalances       *ledgerbalances.Service
-	LedgerEntries        *ledgerentries.Service
-	IdentityDocuments    *identitydocuments.APIService
+	AccountingItems       *accountingitems.APIService
+	AgeCategories         *agecategories.Service
+	Payments              *payments.Service
+	OrderItems            *orderitems.Service
+	OutletItems           *outletitems.Service
+	AccountingCategories  *accountingcategories.Service
+	Companies             *companies.Service
+	Companionships        *companionships.Service
+	Counters              *counters.Service
+	Countries             *countries.Service
+	Customers             *customers.Service
+	Outlets               *outlets.APIService
+	Enterprises           *enterprises.APIService
+	Products              *products.APIService
+	Reservations          *reservations.APIService
+	ReservationGroups     *reservationgroups.APIService
+	Resources             *resources.APIService
+	ProductServiceOrders  *productserviceorders.APIService
+	Services              *services.APIService
+	Rates                 *rates.APIService
+	Bills                 *bills.Service
+	Commands              *commands.Service
+	Configuration         *configuration.Service
+	BusinessSegments      *businesssegments.Service
+	Tasks                 *tasks.Service
+	Finance               *finance.Service
+	CashierTransactions   *cashiertransactions.Service
+	Cashiers              *cashiers.Service
+	CreditCards           *creditcards.Service
+	LedgerBalances        *ledgerbalances.Service
+	LedgerEntries         *ledgerentries.Service
+	IdentityDocuments     *identitydocuments.APIService
+	FiscalMachineCommands *fiscalmachinecommands.Service
 }
 
 func (c *Client) SetDebug(debug bool) {
