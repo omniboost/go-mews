@@ -1,6 +1,6 @@
 module github.com/omniboost/go-mews
 
-go 1.24.5
+go 1.24.0
 
 require (
 	github.com/cydev/zero v0.0.0-20160322155811-4a4535dd56e7
