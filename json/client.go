@@ -18,7 +18,6 @@ var (
 	defaultUserAgent = "go"
 	mediaType        = "application/json"
 	charset          = "utf-8"
-	defaultTimeout   = 10 * time.Second
 
 	ErrNoAccessToken = errors.New("No access token specified")
 	ErrNoClientToken = errors.New("No client token specified")
@@ -48,6 +47,9 @@ type Client struct {
 
 	// Optional function called after every successful request made to the DO APIs
 	onRequestCompleted RequestCompletionCallback
+
+	Timeout        time.Duration
+	RetryOnTimeout bool
 }
 
 // RequestCompletionCallback defines the type of the request callback function
@@ -63,7 +65,6 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 
 	if httpClient == nil {
 		c.Client = http.DefaultClient
-		c.Client.Timeout = defaultTimeout
 	} else {
 		c.Client = httpClient
 	}
@@ -81,6 +82,20 @@ func (c *Client) GetApiURL(path string) (*url.URL, error) {
 	return apiURL, nil
 }
 
+func cloneRequest(req *http.Request, ctx context.Context) (*http.Request, error) {
+	newReq := req.Clone(ctx)
+	if req.Body != nil && req.Body != http.NoBody {
+		// If the request has a body, we need to read it and set it again
+		body, err := io.ReadAll(req.Body)
+		if err != nil {
+			return nil, err
+		}
+		req.Body = io.NopCloser(bytes.NewReader(body))
+		newReq.Body = io.NopCloser(bytes.NewReader(body))
+	}
+	return newReq, nil
+}
+
 // Do sends an API request and returns the API response. The API response is XML decoded and stored in the value
 // pointed to by v, or returned as an error if an API error has occurred. If v implements the io.Writer interface,
 // the raw response will be written to v, without attempting to decode it.
@@ -90,8 +105,38 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 		log.Println(string(dump))
 	}
 
+	allowRetry := c.RetryOnTimeout
+	originalContext := req.Context()
+	// if the request context doesn't have a deadline set, and we have a default deadline, set a timeout
+	if _, ok := originalContext.Deadline(); !ok && c.Timeout > 0 {
+		ctx, cancel := context.WithTimeout(originalContext, c.Timeout)
+		defer cancel()
+		req = req.WithContext(ctx)
+	} else {
+		// if the request context already has a deadline set,
+		// retry on timeout is useless, since the deadline will already be in the past
+		allowRetry = false
+	}
+
+	var originalReq *http.Request
+	if allowRetry {
+		var err error
+		originalReq, err = cloneRequest(req, originalContext)
+		if err != nil {
+			return nil, fmt.Errorf("failed to clone request: %w", err)
+		}
+	}
+
 	httpResp, err := c.Client.Do(req)
 	if err != nil {
+		if errors.Is(err, context.DeadlineExceeded) && allowRetry {
+			// if the request timed out, retry it
+			if c.Debug == true {
+				log.Println("Request timed out, retrying...")
+			}
+			time.Sleep(500 * time.Millisecond)
+			return c.Do(originalReq, response)
+		}
 		return nil, err
 	}
 	if c.onRequestCompleted != nil {

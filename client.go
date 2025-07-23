@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/omniboost/go-mews/accountingcategories"
 	"github.com/omniboost/go-mews/accountingitems"
@@ -70,6 +71,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	jsonClient.AccessToken = accessToken
 	jsonClient.ClientToken = clientToken
 	jsonClient.Debug = false
+	jsonClient.Timeout = 60 * time.Second
+	jsonClient.RetryOnTimeout = false
 
 	c := &Client{
 		client: jsonClient,
@@ -195,6 +198,14 @@ func (c *Client) SetDebug(debug bool) {
 
 func (c *Client) SetBaseURL(baseURL *url.URL) {
 	c.client.BaseURL = baseURL
+}
+
+func (c *Client) SetTimeout(timeout time.Duration) {
+	c.client.Client.Timeout = timeout
+}
+
+func (c *Client) SetRetryOnTimeout(retryOnTimeout bool) {
+	c.client.RetryOnTimeout = retryOnTimeout
 }
 
 func (c *Client) SetDisallowUnknownFields(disallowUnknownFields bool) {
