@@ -73,6 +73,7 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	jsonClient.Debug = false
 	jsonClient.Timeout = 60 * time.Second
 	jsonClient.RetryOnTimeout = false
+	jsonClient.MaxRetries = 3
 
 	c := &Client{
 		client: jsonClient,

@@ -21,7 +21,10 @@ var (
 
 	ErrNoAccessToken = errors.New("No access token specified")
 	ErrNoClientToken = errors.New("No client token specified")
+	ctxRetryAttempt  = ContextKey("retry-attempt")
 )
+
+type ContextKey string
 
 type Client struct {
 	// HTTP client used to communicate with the DO API.
@@ -50,6 +53,7 @@ type Client struct {
 
 	Timeout        time.Duration
 	RetryOnTimeout bool
+	MaxRetries     int
 }
 
 // RequestCompletionCallback defines the type of the request callback function
@@ -107,8 +111,12 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 
 	allowRetry := c.RetryOnTimeout
 	originalContext := req.Context()
+	retryAttempt, ok := originalContext.Value(ctxRetryAttempt).(int)
+	if !ok {
+		retryAttempt = 0
+	}
 	// if the request context doesn't have a deadline set, and we have a default deadline, set a timeout
-	if _, ok := originalContext.Deadline(); !ok && c.Timeout > 0 {
+	if _, ok := originalContext.Deadline(); !ok && c.Timeout > 0 && retryAttempt < c.MaxRetries {
 		ctx, cancel := context.WithTimeout(originalContext, c.Timeout)
 		defer cancel()
 		req = req.WithContext(ctx)
@@ -121,7 +129,7 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 	var originalReq *http.Request
 	if allowRetry {
 		var err error
-		originalReq, err = cloneRequest(req, originalContext)
+		originalReq, err = cloneRequest(req, context.WithValue(originalContext, ctxRetryAttempt, retryAttempt+1))
 		if err != nil {
 			return nil, fmt.Errorf("failed to clone request: %w", err)
 		}
