@@ -37,6 +37,7 @@ func (s *APIService) All(requestBody *AllRequest) (*AllResponse, error) {
 
 type AllResponse struct {
 	Services Services `json:"Services"` // Services offered by the enterprise.
+	Cursor   string   `json:"Cursor"`
 }
 
 type Services []Service
@@ -59,6 +60,8 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
+	ServiceIDs []string        `json:"ServiceIds,omitempty"` // Unique identifiers of the requested Services.
+	Limitation base.Limitation `json:"Limitation,omitempty"`
 }
 
 type Promotions struct {
