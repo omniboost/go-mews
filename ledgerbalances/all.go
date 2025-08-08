@@ -58,11 +58,11 @@ type LedgerType string
 type LedgerBalances []LedgerBalance
 
 type LedgerBalance struct {
-	EnterpriseID   string    `json:"EnterpriseId"`
-	Date           base.Date `json:"Date"`
-	LedgerType     string    `json:"LedgerType"`
-	OpeningBalance Balance   `json:"OpeningBalance"`
-	ClosingBalance Balance   `json:"ClosingBalance"`
+	EnterpriseID   string  `json:"EnterpriseId"`
+	Date           string  `json:"Date"`
+	LedgerType     string  `json:"LedgerType"`
+	OpeningBalance Balance `json:"OpeningBalance"`
+	ClosingBalance Balance `json:"ClosingBalance"`
 }
 
 type Balance struct {
