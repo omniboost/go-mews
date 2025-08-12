@@ -116,10 +116,12 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 		retryAttempt = 0
 	}
 	// if the request context doesn't have a deadline set, and we have a default deadline, set a timeout
-	if _, ok := originalContext.Deadline(); !ok && c.Timeout > 0 && retryAttempt < c.MaxRetries {
+	if _, ok := originalContext.Deadline(); !ok && c.Timeout > 0 {
 		ctx, cancel := context.WithTimeout(originalContext, c.Timeout)
 		defer cancel()
 		req = req.WithContext(ctx)
+		// only allow retry if we haven't reached the maximum number of retries
+		allowRetry = retryAttempt < c.MaxRetries
 	} else {
 		// if the request context already has a deadline set,
 		// retry on timeout is useless, since the deadline will already be in the past
