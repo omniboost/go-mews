@@ -2,6 +2,7 @@ package products
 
 import (
 	"github.com/omniboost/go-mews/configuration"
+	"github.com/omniboost/go-mews/json"
 	base "github.com/omniboost/go-mews/json"
 	"github.com/omniboost/go-mews/services"
 )
@@ -34,6 +35,7 @@ func (s *APIService) All(requestBody *AllRequest) (*AllResponse, error) {
 
 type AllResponse struct {
 	Products Products
+	Cursor   string `json:"Cursor"`
 }
 
 func (s *APIService) NewAllRequest() *AllRequest {
@@ -42,7 +44,9 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
-	ServiceIDs []string `json:"ServiceIds"` // Unique identifiers of the Services.
+
+	ServiceIDs []string        `json:"ServiceIds"` // Unique identifiers of the Services.
+	Limitation json.Limitation `json:"Limitation,omitempty"`
 }
 
 type Products []Product
