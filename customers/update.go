@@ -62,14 +62,6 @@ type UpdateRequest struct {
 	LoyaltyCode string `json:"LocaltyCode"`
 	// Internal notes about the customer. Old value will be overwritten.
 	Notes string `json:"Notes"`
-	// New identity card details.
-	IdentityCard *Document `json:"IdentityCard"`
-	// New passport details.
-	Passport *Document `json:"Passport"`
-	// New visa details.
-	Visa *Document `json:"Visa"`
-	// New drivers license details.
-	DriversLicense *Document `json:"DriversLicense"`
 	// New address details.
 	Address *configuration.Address `json:"Address"`
 	// New classifications of the customers

@@ -46,17 +46,19 @@ func (s *Service) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
-	Limitation     base.Limitation            `json:"Limitation,omitempty"`
+
+	CreatedUTC     configuration.TimeInterval `json:"CreatedUtc,omitempty"`     // Interval in which Customer was created.
+	UpdatedUTC     configuration.TimeInterval `json:"UpdatedUtc,omitempty"`     // Interval in which Customer was updated.
+	Extent         CustomersExtent            `json:"Extent,omitempty"`         // Extent of data to be returned.
+	DeletedUTC     configuration.TimeInterval `json:"DeletedUtc,omitempty"`     // Interval in which Customer was deleted. ActivityStates value Deleted should be provided with this filter to get expected results.
+	ActivityStates services.ActivityStates    `json:"ActivityStates,omitempty"` // Whether return only active, only deleted or both records.
 	CustomerIDs    []string                   `json:"CustomerIds,omitempty"`    // Unique identifiers of Customers. Required if no other filter is provided.
+	CompanyIDs     []string                   `json:"CompanyIds,omitempty"`     // Unique identifier of the Company the customer is associated with.
 	Emails         []string                   `json:"Emails,omitempty"`         // Emails of the Customers.
 	FirstNames     []string                   `json:"FirstNames,omitempty"`     // First names of the Customers.
 	LastNames      []string                   `json:"LastNames,omitempty"`      // Last names of the Customers.
 	LoyaltyCodes   []string                   `json:"LoyaltyCodes,omitempty"`   // Loyalty codes of the Customers.
-	CreatedUTC     configuration.TimeInterval `json:"CreatedUtc,omitempty"`     // Interval in which Customer was created.
-	UpdatedUTC     configuration.TimeInterval `json:"UpdatedUtc,omitempty"`     // Interval in which Customer was updated.
-	DeletedUTC     configuration.TimeInterval `json:"DeletedUtc,omitempty"`     // Interval in which Customer was deleted. ActivityStates value Deleted should be provided with this filter to get expected results.
-	ActivityStates services.ActivityStates    `json:"ActivityStates,omitempty"` // Whether return only active, only deleted or both records.
-	Extent         CustomersExtent            `json:"Extent,omitempty"`         // Extent of data to be returned.
+	Limitation     base.Limitation            `json:"Limitation,omitempty"`     // Limitation on the quantity of data returned.
 }
 
 func (r AllRequest) MarshalJSON() ([]byte, error) {
@@ -70,51 +72,49 @@ type AllResponse struct {
 
 type CustomersExtent struct {
 	Customers bool `json:"Customers"` // Whether the response should contain information about customers.
-	Documents bool `json:"Document"`  // Whether the response should contain identity documents of customers.
 	Addresses bool `json:"Addresses"` // Whether the response should contain addresses of customers.
 }
 
 type Customers []Customer
 
 type Customer struct {
-	ID                      string                `json:"Id"`                      // Unique identifier of the customer.
-	Number                  string                `json:"Number"`                  // Number of the customer.
-	FirstName               string                `json:"FirstName"`               // First name of the customer.
-	LastName                string                `json:"LastName"`                // Last name of the customer.
-	SecondLastName          string                `json:"SecondLastName"`          // Second last name of the customer.
-	Title                   Title                 `json:"Title"`                   // Title prefix of the customer.
-	Sex                     Sex                   `json:"Sex"`                     // Sex of the customer.
-	NationalityCode         string                `json:"NationalityCode"`         // ISO 3166-1 alpha-2 country code (two letter country code) of the nationality.
-	LanguageCode            string                `json:"LanguageCode"`            // Language and culture code of the customers preferred language. E.g. en-US or fr-FR.
-	BirthDate               string                `json:"BirthDate"`               // Date of birth in ISO 8601 format.
-	BirthDateUTC            time.Time             `json:"BirthDateUtc"`            // ??
-	BirthPlace              string                `json:"BirthPlace"`              // Place of birth.
-	Email                   string                `json:"Email"`                   // Email address of the customer.
-	Phone                   string                `json:"Phone"`                   // Phone number of the customer (possibly mobile).
-	TaxIdentificationNumber string                `json:"TaxIdentificationNumber"` // tax id customer
-	LoyaltyCode             string                `json:"LoyaltyCode"`             // Loyalty code of the customer.
-	AccountingCode          string                `json:"AccountingCode"`          // Accounting code of the customer.
-	BillingCode             string                `json:"BillingCode"`             // Billing code of the customer.
-	Notes                   string                `json:"Notes"`                   // ??
-	Classifications         []Classification      `json:"Classifications"`         // Classifications of the customer.
-	Options                 Options               `json:"Options"`                 // Options of the customer.
-	Address                 configuration.Address `json:"Address"`                 // Address of the customer.
-	CreatedUTC              time.Time             `json:"CreatedUtc"`              // Creation date and time of the customer in UTC timezone in ISO 8601 format.
-	UpdatedUTC              time.Time             `json:"UpdatedUtc"`              // Last update date and time of the customer in UTC timezone in ISO 8601 format.
-	ItalianDestinationCode  string                `json:"ItalianDestinationCode"`  // Value of Italian destination code.
-	ItalianFiscalCode       string                `json:"ItalianFiscalCode"`       // Value of Italian fiscal code.
-	CompanyID               string                `json:"CompanyId"`               // Unique identifier of Company the customer is associated with.
-
-	// Deprecated
-	Passport       Document       `json:"Passport"`       // Passport details of the customer.
-	IdentityCard   Document       `json:"IdentityCard"`   // IdentityCard details for Customer.
-	Visa           Document       `json:"Visa"`           // Visa details for Customer.
-	CategoryID     string         `json:"CategoryId"`     // ??
-	CitizenNumber  string         `json:"CitizenNumber"`  // ??
-	FatherName     string         `json:"FatherName"`     // ??
-	MotherName     string         `json:"MotherName"`     // ??
-	Occupation     string         `json:"Occupation"`     // ??
-	DriversLicense DriversLicense `json:"DriversLicense"` // Drivers license  details of the customer.
+	ID                      string                         `json:"Id"`                      // Unique identifier of the customer.
+	ChainID                 string                         `json:"ChainId"`                 // Unique identifier of the chain.
+	Number                  string                         `json:"Number"`                  // Number of the customer.
+	Title                   Title                          `json:"Title"`                   // Title prefix of the customer.
+	Sex                     Sex                            `json:"Sex"`                     // Sex of the customer.
+	FirstName               string                         `json:"FirstName"`               // First name of the customer.
+	LastName                string                         `json:"LastName"`                // Last name of the customer.
+	SecondLastName          string                         `json:"SecondLastName"`          // Second last name of the customer.
+	NationalityCode         string                         `json:"NationalityCode"`         // ISO 3166-1 alpha-2 country code (two letter country code) of the nationality.
+	PreferredLanguageCode   string                         `json:"PreferredLanguageCode"`   // Language and culture code of the customer's preferred language, according to their profile. For example: en-GB, fr-CA.
+	LanguageCode            string                         `json:"LanguageCode"`            // Language and culture code of the customers preferred language. E.g. en-US or fr-FR.
+	BirthDate               string                         `json:"BirthDate"`               // Date of birth in ISO 8601 format.
+	BirthPlace              string                         `json:"BirthPlace"`              // Place of birth.
+	Occupation              string                         `json:"Occupation"`              // Occupation of the customer.
+	Email                   string                         `json:"Email"`                   // Email address of the customer.
+	HasOTAEmail             bool                           `json:"HasOtaEmail"`             // Whether the customer's email address is a temporary email address from an OTA. For more details, see the product documentation.
+	Phone                   string                         `json:"Phone"`                   // Phone number of the customer (possibly mobile).
+	TaxIdentificationNumber string                         `json:"TaxIdentificationNumber"` // tax id customer
+	LoyaltyCode             string                         `json:"LoyaltyCode"`             // Loyalty code of the customer.
+	AccountingCode          string                         `json:"AccountingCode"`          // Accounting code of the customer.
+	BillingCode             string                         `json:"BillingCode"`             // Billing code of the customer.
+	Notes                   string                         `json:"Notes"`                   // Internal notes about the customer.
+	CarRegistrationNumber   string                         `json:"CarRegistrationNumber"`   // Registration number of the customer's car.
+	DietaryRequirements     string                         `json:"DietaryRequirements"`     // Customer's dietary requirements, e.g. Vegan, Halal.
+	CreatedUTC              time.Time                      `json:"CreatedUtc"`              // Creation date and time of the customer in UTC timezone in ISO 8601 format.
+	UpdatedUTC              time.Time                      `json:"UpdatedUtc"`              // Last update date and time of the customer in UTC timezone in ISO 8601 format.
+	AddressID               string                         `json:"AddressId"`               // Unique identifier of the Address of the customer.
+	Classifications         []Classification               `json:"Classifications"`         // Classifications of the customer.
+	Options                 Options                        `json:"Options"`                 // Options of the customer.
+	ItalianDestinationCode  string                         `json:"ItalianDestinationCode"`  // Value of Italian destination code.
+	ItalianFiscalCode       string                         `json:"ItalianFiscalCode"`       // Value of Italian fiscal code.
+	CompanyID               string                         `json:"CompanyId"`               // Unique identifier of Company the customer is associated with.
+	MergeTargetID           string                         `json:"MergeTargetId"`           // Unique identifier of the account (Customer) to which this customer is linked.
+	IsActive                bool                           `json:"IsActive"`                // Whether the customer record is still active.
+	PreferredSpaceFeatures  ResourceFeatureClassifications // A list of room preferences, such as view type, bed type, and amenities.
+	CreatorProfileID        string                         `json:"CreatorProfileId"` // Unique identifier of the user who created the customer.
+	UpdaterProfileID        string                         `json:"UpdaterProfileId"` // Unique identifier of the user who last updated the customer.
 }
 
 type Title string
@@ -139,24 +139,33 @@ const (
 	GenderFemale Gender = "Female"
 )
 
-type Document struct {
-	Number             string    `json:"Number"`             // Number of the document (e.g. passport number).
-	Issuance           base.Date `json:"Issuance"`           // Date of issuance in ISO 8601 format.
-	Expiration         base.Date `json:"Expiration"`         // Expiration date in ISO 8601 format.
-	ExpirationUTC      time.Time `json:"ExpirationUtc"`      // ??
-	IssuanceUTC        time.Time `json:"IssuanceUtc"`        // ??
-	IssuingCountryCode string    `json:"IssuingCountryCode"` // ISO 3166-1 code of the Country.
-}
-
 type Classification string
 
 type Options []string
 
-type DriversLicense struct {
-	Expiration         base.Date `json:"Expiration"`
-	ExpirationUTC      time.Time `json:"ExpirationUtc"`
-	Issuance           base.Date `json:"Issuance"`
-	IssuanceUTC        time.Time `json:"IssuanceUtc"`
-	IssuingCountryCode string    `json:"IssuingCountryCode"`
-	Number             string    `json:"Number"`
-}
+type ResourceFeatureClassifications []ResourceFeatureClassification
+
+type ResourceFeatureClassification string
+
+const (
+	SeaView            ResourceFeatureClassification = "SeaView"
+	RiverView          ResourceFeatureClassification = "RiverView"
+	OceanView          ResourceFeatureClassification = "OceanView"
+	TwinBeds           ResourceFeatureClassification = "TwinBeds"
+	DoubleBed          ResourceFeatureClassification = "DoubleBed"
+	RollawayBed        ResourceFeatureClassification = "RollawayBed"
+	UpperBed           ResourceFeatureClassification = "UpperBed"
+	LowerBed           ResourceFeatureClassification = "LowerBed"
+	Balcony            ResourceFeatureClassification = "Balcony"
+	AccessibleBathroom ResourceFeatureClassification = "AccessibleBathroom"
+	AccessibleRoom     ResourceFeatureClassification = "AccessibleRoom"
+	ElevatorAccess     ResourceFeatureClassification = "ElevatorAccess"
+	HighFloor          ResourceFeatureClassification = "HighFloor"
+	Kitchenette        ResourceFeatureClassification = "Kitchenette"
+	AirConditioning    ResourceFeatureClassification = "AirConditioning"
+	PrivateJacuzzi     ResourceFeatureClassification = "PrivateJacuzzi"
+	PrivateSauna       ResourceFeatureClassification = "PrivateSauna"
+	EnsuiteRoom        ResourceFeatureClassification = "EnsuiteRoom"
+	PrivateBathroom    ResourceFeatureClassification = "PrivateBathroom"
+	SharedBathroom     ResourceFeatureClassification = "SharedBathroom"
+)

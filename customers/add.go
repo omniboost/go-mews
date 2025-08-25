@@ -64,14 +64,6 @@ type AddRequest struct {
 	LoyaltyCode string `json:"LocaltyCode,omitempty"`
 	// Internal notes about the customer. Old value will be overwritten.
 	Notes string `json:"Notes,omitempty"`
-	// New identity card details.
-	IdentityCard *Document `json:"IdentityCard,omitempty"`
-	// New passport details.
-	Passport *Document `json:"Passport,omitempty"`
-	// New visa details.
-	Visa *Document `json:"Visa,omitempty"`
-	// New drivers license details.
-	DriversLicense *Document `json:"DriversLicense,omitempty"`
 	// New address details.
 	Address *configuration.Address `json:"Address,omitempty"`
 	// Italian Destination Code
