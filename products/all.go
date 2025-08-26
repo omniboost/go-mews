@@ -39,14 +39,19 @@ type AllResponse struct {
 }
 
 func (s *APIService) NewAllRequest() *AllRequest {
-	return &AllRequest{}
+	return &AllRequest{
+		IncludeDefault: true,
+	}
 }
 
 type AllRequest struct {
 	base.BaseRequest
 
-	ServiceIDs []string        `json:"ServiceIds"` // Unique identifiers of the Services.
-	Limitation json.Limitation `json:"Limitation,omitempty"`
+	ProductIDs     []string                    `json:"ProductIds,omitempty"` // Unique identifiers of the products.
+	ServiceIDs     []string                    `json:"ServiceIds"`           // Unique identifiers of the Services.
+	UpdatedUTC     *configuration.TimeInterval `json:"UpdatedUtc,omitempty"` // Interval in which the products were updated.
+	IncludeDefault bool                        `json:"IncludeDefault"`       // Whether or not to include default products for the service, i.e. products which are standard includes and not true extras. For example, the night's stay would be the default product for a room reservation. These may be useful for accounting purposes but should not be displayed to customers for selection. If ProductIds are provided, IncludeDefault defaults to true, otherwise it defaults to false.
+	Limitation     json.Limitation             `json:"Limitation,omitempty"`
 }
 
 type Products []Product
