@@ -71,6 +71,10 @@ type Product struct {
 	Promotions         services.Promotions         `json:"Promotions"`             // Promotions of the service.
 	Classifications    ProductClassifications      `json:"ProductClassifications"` // Classifications of the service.
 	Price              configuration.CurrencyValue `json:"Price"`                  // Price of the product.
+	Options            struct {
+		BillAsPackage bool `json:"BillAsPackage"` // Whether the product is billed as a package.
+	} `json:"Options"` // Options for the product.
+
 }
 
 type ProductCharging string

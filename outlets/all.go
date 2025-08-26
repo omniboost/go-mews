@@ -41,7 +41,7 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
-	Limitation base.Limitation `json:"Limitation,omitempty"`
+	Limitation *base.Limitation `json:"Limitation,omitempty"`
 }
 
 type Outlets []Outlet
