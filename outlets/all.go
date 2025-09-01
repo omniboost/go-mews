@@ -2,6 +2,7 @@ package outlets
 
 import (
 	base "github.com/omniboost/go-mews/json"
+	"github.com/omniboost/go-mews/omitempty"
 )
 
 const (
@@ -41,7 +42,11 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	base.BaseRequest
-	Limitation *base.Limitation `json:"Limitation,omitempty"`
+	Limitation base.Limitation `json:"Limitation,omitempty"`
+}
+
+func (r AllRequest) MarshalJSON() ([]byte, error) {
+	return omitempty.MarshalJSON(r)
 }
 
 type Outlets []Outlet
