@@ -107,6 +107,7 @@ type Customer struct {
 	AddressID               string                         `json:"AddressId"`               // Unique identifier of the Address of the customer.
 	Classifications         []Classification               `json:"Classifications"`         // Classifications of the customer.
 	Options                 Options                        `json:"Options"`                 // Options of the customer.
+	Address                 configuration.Address          `json:"Address"`                 // Address of the customer.
 	ItalianDestinationCode  string                         `json:"ItalianDestinationCode"`  // Value of Italian destination code.
 	ItalianFiscalCode       string                         `json:"ItalianFiscalCode"`       // Value of Italian fiscal code.
 	CompanyID               string                         `json:"CompanyId"`               // Unique identifier of Company the customer is associated with.
