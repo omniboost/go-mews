@@ -38,6 +38,7 @@ import (
 	"github.com/omniboost/go-mews/reservationgroups"
 	"github.com/omniboost/go-mews/reservations"
 	"github.com/omniboost/go-mews/resources"
+	"github.com/omniboost/go-mews/serviceordernotes"
 	"github.com/omniboost/go-mews/services"
 	"github.com/omniboost/go-mews/tasks"
 )
@@ -148,6 +149,8 @@ func NewClient(httpClient *http.Client, accessToken string, clientToken string) 
 	c.IdentityDocuments.Client = c.client
 	c.FiscalMachineCommands = fiscalmachinecommands.NewService()
 	c.FiscalMachineCommands.Client = c.client
+	c.ServiceOrderNotes = serviceordernotes.NewAPIService()
+	c.ServiceOrderNotes.Client = c.client
 
 	return c
 }
@@ -191,6 +194,7 @@ type Client struct {
 	LedgerEntries         *ledgerentries.Service
 	IdentityDocuments     *identitydocuments.APIService
 	FiscalMachineCommands *fiscalmachinecommands.Service
+	ServiceOrderNotes     *serviceordernotes.APIService
 }
 
 func (c *Client) SetDebug(debug bool) {
