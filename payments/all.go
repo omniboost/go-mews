@@ -72,6 +72,7 @@ type Payment struct {
 	AccountID            string          `json:"AccountID,omitempty"`
 	AccountType          string          `json:"AccountType,omitempty"`
 	BillID               string          `json:"BillID,omitempty"`
+	ReservationID        string          `json:"ReservationID,omitempty"`
 	AccountingCategoryID string          `json:"AccountingCategoryID,omitempty"`
 	Amount               Amount          `json:"Amount,omitempty"`
 	OriginalAmount       Amount          `json:"OriginalAmount,omitempty"`
