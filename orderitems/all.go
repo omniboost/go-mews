@@ -137,13 +137,13 @@ type Amount struct {
 	NetValue   float64   `json:"NetValue"`   // Net value in case the item is taxed.
 	GrossValue float64   `json:"GrossValue"` // Gross value including all taxes.
 	TaxValues  TaxValues `json:"TaxValues"`  // The tax values applied.
-	TaxCodes   []string  `json:"TaxCodes"`   // Codes of Tax rates to be applied to the item. (Note, you can only define one tax when sending GrossValue. For multiple taxes, use NetValue)
 
 	// Deprecated?
-	Net     float64  `json:"Net"`     // Net value in case the item is taxed.
-	Tax     float64  `json:"Tax"`     // Tax value in case the item is taxed.
-	TaxRate *float64 `json:"TaxRate"` // Tax rate in case the item is taxed (e.g. 0.21).
-	Value   float64  `json:"Value"`   // Amount in the currency (including tax if taxed).
+	TaxCodes []string `json:"TaxCodes"` // Codes of Tax rates to be applied to the item. (Note, you can only define one tax when sending GrossValue. For multiple taxes, use NetValue)
+	Net      float64  `json:"Net"`      // Net value in case the item is taxed.
+	Tax      float64  `json:"Tax"`      // Tax value in case the item is taxed.
+	TaxRate  *float64 `json:"TaxRate"`  // Tax rate in case the item is taxed (e.g. 0.21).
+	Value    float64  `json:"Value"`    // Amount in the currency (including tax if taxed).
 }
 
 func (a Amount) MarshalJSON() ([]byte, error) {
