@@ -155,7 +155,18 @@ type TransactionData struct {
 
 type InvoicePayment struct {
 	InvoiceID string `json:"InvoiceID,omitempty"`
+	Type      string `json:"Type,omitempty"`
 }
+
+type InvoicePaymentType string
+
+var (
+	Receivable                      InvoicePaymentType = "Receivable"
+	Balancing                       InvoicePaymentType = "Balancing"
+	UnderpaymentBalancingReceivable InvoicePaymentType = "UnderpaymentBalancingReceivable"
+	OverpaymentBalancingReceivable  InvoicePaymentType = "OverpaymentBalancingReceivable"
+	Overpayment                     InvoicePaymentType = "Overpayment"
+)
 
 type ExternalPaymentData struct {
 	Type               ExternalPaymentType `json:"Type,omitempty"`
