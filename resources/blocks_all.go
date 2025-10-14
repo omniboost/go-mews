@@ -57,6 +57,7 @@ func (r BlocksAllRequest) MarshalJSON() ([]byte, error) {
 
 type BlocksAllResponse struct {
 	ResourceBlocks ResourceBlocks `json:"ResourceBlocks"`
+	Cursor         string         `json:"Cursor"`
 }
 
 type ResourceBlocks []ResourceBlock
