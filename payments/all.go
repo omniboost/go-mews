@@ -136,6 +136,7 @@ type PaymentData struct {
 	CreditCard    CreditCard          `json:"CreditCard,omitempty"`
 	Invoice       InvoicePayment      `json:"Invoice,omitempty"`
 	External      ExternalPaymentData `json:"External,omitempty"`
+	Ghost         GhostPaymentData    `json:"Ghost,omitempty"`
 }
 
 type CreditCard struct {
@@ -171,6 +172,10 @@ var (
 type ExternalPaymentData struct {
 	Type               ExternalPaymentType `json:"Type,omitempty"`
 	ExternalIdentifier string              `json:"ExternalIdentifier,omitempty"`
+}
+
+type GhostPaymentData struct {
+	OriginalPaymentID string `json:"OriginalPaymentId,omitempty"`
 }
 
 type ExternalPaymentType string
