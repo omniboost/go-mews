@@ -54,6 +54,9 @@ type Client struct {
 	Timeout        time.Duration
 	RetryOnTimeout bool
 	MaxRetries     int
+
+	// 429 - Too many requests handling
+	retryAfter *time.Time
 }
 
 // RequestCompletionCallback defines the type of the request callback function
@@ -109,6 +112,9 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 		log.Println(string(dump))
 	}
 
+	// Wait until "Retry-After" time has passed
+	c.sleepUntilRetryAfter()
+
 	allowRetry := c.RetryOnTimeout
 	originalContext := req.Context()
 	retryAttempt, ok := originalContext.Value(ctxRetryAttempt).(int)
@@ -163,6 +169,14 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 	if c.Debug == true {
 		dump, _ := httputil.DumpResponse(httpResp, true)
 		log.Println(string(dump))
+	}
+
+	// Handle '429 - Too many requests' responses
+	if httpResp.StatusCode == http.StatusTooManyRequests {
+		c.SetRetryAfterByResponse(httpResp)
+		c.sleepUntilRetryAfter()
+		c.SetRetryAfter(nil)
+		return c.Do(originalReq, response)
 	}
 
 	// check if the response isn't an error
@@ -253,6 +267,49 @@ func (c *Client) SetLanguageCode(code string) {
 
 func (c *Client) SetCultureCode(code string) {
 	c.cultureCode = code
+}
+
+func (c *Client) SetRetryAfter(retryAfter *time.Time) {
+	// Set the "Retry-After" time
+	c.retryAfter = retryAfter
+}
+
+func (c *Client) SetRetryAfterByResponse(req *http.Response) error {
+	// Get the "Retry-After" header
+	retryAfter := req.Header.Get("Retry-After")
+
+	// When the "Retry-After" header is not set, continue
+	if retryAfter == "" {
+		return nil
+	}
+
+	// Parse the "Retry-After" header to a duration in seconds
+	retryAfterTime, err := time.Parse(time.RFC1123, retryAfter)
+	if err != nil {
+		return err
+	}
+
+	// Set the "Retry-After" time
+	c.SetRetryAfter(&retryAfterTime)
+
+	return nil
+}
+
+func (c *Client) sleepUntilRetryAfter() {
+	// When the "Retry-After" time is not set, continue
+	if c.retryAfter == nil || c.retryAfter.IsZero() {
+		return
+	}
+
+	// Calculate the duration to sleep
+	now := time.Now()
+	diff := c.retryAfter.Sub(now)
+	if diff <= 0 {
+		return
+	}
+
+	// Sleep for the duration of "Retry-After"
+	time.Sleep(diff)
 }
 
 type RequestBody interface {
