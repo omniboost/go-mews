@@ -12,6 +12,8 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"time"
+
+	httperr "github.com/omniboost/go-httperr"
 )
 
 var (
@@ -153,7 +155,9 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 			time.Sleep(500 * time.Millisecond)
 			return c.Do(originalReq, response)
 		}
-		return nil, err
+
+		// wrap error in http error so we can handle it properly
+		return nil, &httperr.Error{StatusCode: httpResp.StatusCode, Err: err}
 	}
 	if c.onRequestCompleted != nil {
 		c.onRequestCompleted(req, httpResp)

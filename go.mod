@@ -1,6 +1,6 @@
 module github.com/omniboost/go-mews
 
-go 1.24
+go 1.25.3
 
 require (
 	github.com/cydev/zero v0.0.0-20160322155811-4a4535dd56e7
@@ -11,6 +11,7 @@ require (
 require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
+	github.com/omniboost/go-httperr v0.0.0-20251103155253-030b17131c87 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 )
