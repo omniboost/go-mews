@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	endpointAll = "reservationgroups/getAll"
+	endpointAll = "reservationGroups/getAll"
 )
 
 // List all products
