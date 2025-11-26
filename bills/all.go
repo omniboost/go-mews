@@ -39,22 +39,28 @@ func (s *Service) NewAllRequest() *AllRequest {
 type AllRequest struct {
 	base.BaseRequest
 	Limitation base.Limitation `json:"Limitation,omitempty"`
+	// Interval in which the Bill was issued.
+	IssuedUTC configuration.TimeInterval `json:"IssuedUtc,omitempty"`
+	// Interval in which the Bill was paid.
+	PaidUTC configuration.TimeInterval `json:"PaidUtc,omitempty"`
+	// Interval in which the Bill is due to be paid.
+	DueUTC configuration.TimeInterval `json:"DueUtc,omitempty"`
+	// Interval in which the Bill was created.
+	CreatedUTC configuration.TimeInterval `json:"CreatedUtc,omitempty"`
+	// Interval in which the Bill was updated.
+	UpdatedUTC configuration.TimeInterval `json:"UpdatedUtc,omitempty"`
 	// Unique identifiers of the Bills.
 	BillIDs []string `json:"BillIds,omitempty"`
 	// Unique identifiers of the Customers.
 	CustomerIDs []string `json:"CustomerIds,omitempty"`
 	// Bill state the bills should be in. If not specified Open and Closed bills are returned.
-	State string `json:"State,omitempty"`
+	State BillState `json:"State,omitempty"`
+	// Type of the bills. If not specified, all types are returned.
+	Type BillType `json:"Type,omitempty"`
+	// Whether to return regular bills, corrective bills, or both. If BillIds are specified, defaults to both, otherwise defaults to Bill.
+	CorrectionState []BillCorrectionType `json:"CorrectionState,omitempty"`
 	// Interval in which the Bill was closed.
 	ClosedUTC configuration.TimeInterval `json:"ClosedUtc,omitempty"`
-	// Interval in which the Bill was created.
-	CreatedUTC configuration.TimeInterval `json:"CreatedUtc,omitempty"`
-	// Interval in which the Bill was updated.
-	UpdatedUTC configuration.TimeInterval `json:"UpdatedUtc,omitempty"`
-	// Interval in which the Bill is due to be paid.
-	DueUTC configuration.TimeInterval `json:"DueUtc,omitempty"`
-	// Interval in which the Bill was paid.
-	PaidUTC configuration.TimeInterval `json:"PaidUtc,omitempty"`
 	// Extent of data to be returned. E.g. it is possible to specify that together with the bills, payments and revenue items should be also returned. If not specified, no extent is used.
 	Extent BillExtent `json:"Extent,omitempty"`
 }
@@ -71,3 +77,5 @@ type AllResponse struct {
 type BillExtent struct {
 	Items bool `json:"Items"`
 }
+
+type BillCorrectionType string
