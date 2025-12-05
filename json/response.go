@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
+
+	httperr "github.com/omniboost/go-httperr"
 )
 
 // CheckResponse checks the API response for errors, and returns them if present. A response is considered an
@@ -16,12 +17,14 @@ func CheckResponse(r *http.Response) error {
 		return nil
 	}
 
-	// @TODO: figure out nmbrs errors
+	// we have an error
 	errorResponse := &ErrorResponse{Response: r}
 
-	err := checkContentType(r)
-	if err != nil {
-		errorResponse.Message = err.Error()
+	// if we have no body, return the error response now
+	if r.Body != nil {
+		errorResponse.Message = r.Status
+		// wrap error in http error so we can handle it properly
+		return &httperr.Error{StatusCode: r.StatusCode, Err: errorResponse}
 	}
 
 	data, err := ioutil.ReadAll(r.Body)
@@ -33,14 +36,16 @@ func CheckResponse(r *http.Response) error {
 		return errorResponse
 	}
 
-	// convert xml to struct
 	err = gojson.Unmarshal(data, errorResponse)
-	if err != nil {
-		errorResponse.Message = fmt.Sprintf("Malformed json response")
+	if err == nil {
 		return errorResponse
 	}
 
-	return errorResponse
+	// failed to unmarshal, set message to status
+	errorResponse.Message = r.Status
+	// wrap error in http error so we can handle it properly
+	return &httperr.Error{StatusCode: r.StatusCode, Err: errorResponse}
+
 }
 
 type ErrorResponse struct {
@@ -57,15 +62,4 @@ type ErrorResponse struct {
 func (r *ErrorResponse) Error() string {
 	return fmt.Sprintf("%v %v: %d (%v %v)",
 		r.Response.Request.Method, r.Response.Request.URL, r.Response.StatusCode, r.Details, r.Message)
-}
-
-func checkContentType(response *http.Response) error {
-	// check content-type (application/soap+xml; charset=utf-8)
-	header := response.Header.Get("Content-Type")
-	contentType := strings.Split(header, ";")[0]
-	if contentType != "application/soap+xml" {
-		return fmt.Errorf("Expected Content-Type \"application/soap+xml\", got \"%s\"", contentType)
-	}
-
-	return nil
 }
