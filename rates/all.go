@@ -34,6 +34,7 @@ func (s *APIService) All(requestBody *AllRequest) (*AllResponse, error) {
 type AllResponse struct {
 	Rates      Rates      `json:"Rates"`      // Rates of the default service.
 	RateGroups RateGroups `json:"RateGroups"` // Rate groups of the default service.
+	Cursor     string     `json:"Cursor"`     // Cursor for pagination.
 }
 
 type Rates []Rate
@@ -80,6 +81,7 @@ func (s *APIService) NewAllRequest() *AllRequest {
 
 type AllRequest struct {
 	json.BaseRequest
+	Limitation json.Limitation `json:"Limitation"`
 	// Unique identifiers of the Services from which the rates are requested.
 	ServiceIDs []string `json:"ServiceIds"`
 	// Extent of data to be returned.
