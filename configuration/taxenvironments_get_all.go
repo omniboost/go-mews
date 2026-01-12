@@ -47,8 +47,8 @@ type TaxEnvironment struct {
 	Code             string        `json:"Code"`             // Code of the tax environment.
 	CountryCode      string        `json:"CountryCode"`      // ISO 3166-1 alpha-3 code, e.g. USA or GBR.
 	TaxationCodes    TaxationCodes `json:"TaxationCodes"`    // Codes of the Taxations that are used by this environment.
-	ValidityStartUTC time.Time     `json:"ValidityStartUtc"` // If specified, marks the start of the validity interval in UTC timezone in ISO 8601 format.
-	ValidityEndUTC   time.Time     `json:"ValidityEndUtc"`   // If specified, marks the end of the validity interval in UTC timezone in ISO 8601 format.
+	ValidityStartUTC *time.Time     `json:"ValidityStartUtc"` // If specified, marks the start of the validity interval in UTC timezone in ISO 8601 format.
+	ValidityEndUTC   *time.Time     `json:"ValidityEndUtc"`   // If specified, marks the end of the validity interval in UTC timezone in ISO 8601 format.
 
 }
 
