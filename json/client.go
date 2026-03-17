@@ -157,7 +157,11 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 		}
 
 		// wrap error in http error so we can handle it properly
-		return nil, &httperr.Error{StatusCode: httpResp.StatusCode, Err: err}
+		statusCode := 0
+		if httpResp != nil {
+			statusCode = httpResp.StatusCode
+		}
+		return nil, &httperr.Error{StatusCode: statusCode, Err: err}
 	}
 	if c.onRequestCompleted != nil {
 		c.onRequestCompleted(req, httpResp)
