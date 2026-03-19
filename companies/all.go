@@ -90,4 +90,6 @@ type Company struct {
 	Notes                       string                `json:"Notes"`
 	TaxIdentificationNumber     string                `json:"TaxIdentificationNumber"`
 	Options                     CompanyOptions        `json:"Options"`
+	Department                  string                `json:"Department"`
+	DunsNumber                  string                `json:"DunsNumber"`
 }
