@@ -78,6 +78,7 @@ type Enterprise struct {
 	Address                            Address                 `json:"Address"`                            // Address of the enterprise.
 	GroupNames                         []string                `json:"GroupNames"`                         // A list of the group names of the enterprise.
 	Subscription                       EnterpriseSubscription  `json:"Subscription"`                       // Subscription information of the enterprise.
+	LinkedUTC                          time.Time               `json:"LinkedUtc"`                          // Date and time when enterprise was added to the portfolio in UTC timezone in ISO 8601 format.
 	Currencies                         Currencies              `json:"Currencies"`                         // Currencies accepted by the enterprise.
 	AccountingConfiguration            AccountingConfiguration `json:"AccountingConfiguration"`            // Configuration information containing financial information about the property.
 	IsPortfolio                        bool                    `json:"IsPortfolio"`                        // Whether the enterprise is a Portfolio enterprise (see Multi-property guidelines).
@@ -95,6 +96,7 @@ type Currency struct {
 }
 
 type Address struct {
+	ID                     string      `json:"Id,omitempty"`                     // Unique identifier of the address.
 	Line1                  string      `json:"Line1,omitempty"`                  // First line of the address.
 	Line2                  string      `json:"Line2,omitempty"`                  // Second line of the address.
 	City                   string      `json:"City,omitempty"`                   // The city.
