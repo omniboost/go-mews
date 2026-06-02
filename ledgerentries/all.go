@@ -74,6 +74,7 @@ type LedgerEntries []LedgerEntry
 type LedgerEntry struct {
 	ID                   string    `json:"Id"`
 	EnterpriseID         string    `json:"EnterpriseId"`
+	TransactionID        string    `json:"TransactionId"`
 	AccountID            string    `json:"AccountId"`
 	BillID               string    `json:"BillId"`
 	AccountingCategoryID string    `json:"AccountingCategoryId"`
