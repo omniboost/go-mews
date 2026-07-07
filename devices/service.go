@@ -1,4 +1,4 @@
-package fiscalmachinecommands
+package devices
 
 import "github.com/omniboost/go-mews/json"
 

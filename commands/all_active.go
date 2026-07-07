@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/omniboost/go-mews/bills"
+	"github.com/omniboost/go-mews/devices"
 	"github.com/omniboost/go-mews/json"
 )
 
@@ -48,11 +49,11 @@ type AllActiveResponse struct {
 type Commands []Command
 
 type Command struct {
-	ID         string       `json:"Id"`         // Unique identifier of the command.
-	CreatedUTC time.Time    `json:"CreatedUtc"` // Date and time of the command was created in UTC timezone in ISO 8601 format.
-	Data       Data         `json:"Data"`       // Data send with the command from MEWS
-	Device     Device       `json:"Device"`     // Device information
-	State      CommandState `json:"State"`      // State of the command.
+	ID         string         `json:"Id"`         // Unique identifier of the command.
+	CreatedUTC time.Time      `json:"CreatedUtc"` // Date and time of the command was created in UTC timezone in ISO 8601 format.
+	Data       Data           `json:"Data"`       // Data send with the command from MEWS
+	Device     devices.Device `json:"Device"`     // Device information
+	State      CommandState   `json:"State"`      // State of the command.
 }
 
 type CommandState string
@@ -67,28 +68,11 @@ const (
 )
 
 type Data struct {
-	__type          string     `json:"__type,omitempty"`           // Type of command.
-	Bill            bills.Bill `json:"Bill, omitempty"`            // If available add Bill informaion
-	FiscalMachineID string     `json:"FiscalMachineId, omitempty"` // Unique identifier of the Fiscal Machine.
-	TaxIdentifier   string     `json:"TaxIdentifier, omitempty"`   //Tax Identifier number
+	__type          string     `json:"__type,omitempty"`          // Type of command.
+	Bill            bills.Bill `json:"Bill,omitempty"`            // If available add Bill informaion
+	FiscalMachineID string     `json:"FiscalMachineId,omitempty"` // Unique identifier of the Fiscal Machine.
+	TaxIdentifier   string     `json:"TaxIdentifier,omitempty"`   //Tax Identifier number
 }
-
-type Device struct {
-	ID   string     `json:"Id"`   // Unique identifier of the Device to which the command is send
-	Name string     `json:"Name"` // Name of the Device to which the command is send
-	Type DeviceType `json:"Type"` //Type of Device
-}
-
-type DeviceType string
-
-const (
-	DevicePrinter         DeviceType = "Printer"
-	DevicePaymentTerminal DeviceType = "PaymentTerminal"
-	DevicePassportScanner DeviceType = "PassportScanner"
-	DeviceFiscalMachine   DeviceType = "FiscalMachine"
-	DeviceKeyCutter       DeviceType = "KeyCutter"
-	DeviceVisiKeyCutter   DeviceType = "VisiOnlineKeyCutter"
-)
 
 type BillState string
 
