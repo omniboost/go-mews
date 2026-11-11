@@ -136,13 +136,10 @@ func (c *Client) Do(req *http.Request, response interface{}) (*http.Response, er
 		allowRetry = false
 	}
 
-	var originalReq *http.Request
-	if allowRetry {
-		var err error
-		originalReq, err = cloneRequest(req, context.WithValue(originalContext, ctxRetryAttempt, retryAttempt+1))
-		if err != nil {
-			return nil, fmt.Errorf("failed to clone request: %w", err)
-		}
+	// always keep a copy for a retry: a 429 is retried even when a timeout retry isn't allowed
+	originalReq, err := cloneRequest(req, context.WithValue(originalContext, ctxRetryAttempt, retryAttempt+1))
+	if err != nil {
+		return nil, fmt.Errorf("failed to clone request: %w", err)
 	}
 
 	httpResp, err := c.Client.Do(req)
